@@ -1,5 +1,9 @@
 from Module.student import Student
-from Module.files_operations import load_students, save_students
+from Module.files_operations import (
+    load_students,
+    save_students,
+    import_files,
+)  # 导入文件操作
 import Module.menu as menu
 
 
@@ -11,7 +15,7 @@ class SystemOperations:
     def save(self):
         save_students(self.students)
 
-    # 添加学生成绩
+    # 1.添加学生成绩
     def add(self, student: Student):
         # 学号重复检测
         for stu in self.students:
@@ -21,7 +25,7 @@ class SystemOperations:
         self.students.append(student)
         print("添加成功")
 
-    # 查看所有成绩
+    # 2.查看所有成绩
     def check(self):
         if len(self.students) == 0:
             print("系统中暂无学生信息")
@@ -29,7 +33,7 @@ class SystemOperations:
         for stu in self.students:
             print(stu.info())
 
-    # 删除学生成绩
+    # 3.删除学生成绩
     def delete(self, id):
         # 学生存在检测
         for stu in self.students:
@@ -39,7 +43,7 @@ class SystemOperations:
                 return
         print("系统中无该学生，删除失败")
 
-    # 修改学生成绩
+    # 4.修改学生成绩
     def change(self, id):
         # 学生存在检测
         for stu in self.students:
@@ -77,7 +81,7 @@ class SystemOperations:
                 return
         print("系统中无该学生，修改失败")
 
-    # 查找学生成绩
+    # 5.查找学生成绩
     def find(self, id):
         # 学生存在检测
         for stu in self.students:
@@ -86,7 +90,7 @@ class SystemOperations:
                 return
         print("未找到该学生")
 
-    # 成绩统计分析
+    # 6.成绩统计分析
     def analysis(self):
         len_students = len(self.students)
         if len_students == 0:
@@ -133,3 +137,10 @@ class SystemOperations:
         print(
             f"英语：总分：{total_english},平均分：{average_english:.2f},最高分：{max_english},最低分：{min_english}"
         )
+
+    # 7.导入学生成绩
+    def import_students(self, import_file_path):
+        extend_students = []
+        extend_students = import_files(import_file_path, extend_students)
+        self.students.extend(extend_students)
+        print(f"成功从 {import_file_path} 中导入 {len(extend_students)} 名学生成绩")

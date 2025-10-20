@@ -15,6 +15,7 @@ def system_menu():
     print("4.修改学生成绩")
     print("5.查找学生成绩")
     print("6.成绩统计分析")
+    print("7.导入学生成绩")
     print("0.退出系统")
     print("-" * 20)
 

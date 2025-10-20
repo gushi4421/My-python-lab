@@ -60,3 +60,33 @@ def save_students(students, file_path="Data/grades.txt"):
     except Exception as e:
         print(f"保存数据时发生错误: {e}")
         return False
+
+
+def import_files(import_file_path, existing_students):
+    try:
+        with open(import_file_path, "r", encoding="utf-8") as file:
+            for line in file:
+                line = line.strip()
+                if line:  # 跳过空行
+                    try:
+                        # 解析数据行：学号,姓名,语文,数学,英语
+                        data = line.split(",")
+                        if len(data) == 5:
+                            student = Student(
+                                data[0],  # 学号
+                                data[1],  # 姓名
+                                int(data[2]),  # 语文成绩
+                                int(data[3]),  # 数学成绩
+                                int(data[4]),  # 英语成绩
+                            )
+                            existing_students.append(student)
+
+                    except (ValueError, IndexError):
+                        # 跳过格式错误的数据行
+                        continue
+
+        return existing_students
+
+    except Exception as e:
+        print(f"导入数据文件时发生错误: {e}")
+        return existing_students
